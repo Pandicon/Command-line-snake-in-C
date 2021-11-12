@@ -71,11 +71,21 @@ void spawnFruit() {
 	} while(fruitY == 0 || fruitY == height-1);
 }
 
+void spawnSnake() {
+	do {
+		snake[0] = rand()%width;
+	} while(snake[0] == 0 || snake[0] == width-1);
+	do {
+		snake[1] = rand()%height;
+	} while(snake[1] == 0 || snake[1] == height-1);
+}
+
 void startGame() {
 	gameover = 0;
 	score = 0;
 
 	spawnFruit();
+	spawnSnake();
 }
 
 void input() {
