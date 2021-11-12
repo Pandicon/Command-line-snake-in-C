@@ -56,8 +56,8 @@ void draw() {
 		i = 0;
 	}
 	if(!gameover) {
-		printf("Score: %d", score);
-		printf("\n");
+		printf("Score: %d\n", score);
+		printf("Press W, A, S, or D to move the snake\n");
 		printf("Press X to quit the game");
 	}
 }
