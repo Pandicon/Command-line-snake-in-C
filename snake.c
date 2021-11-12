@@ -109,7 +109,11 @@ void logic() {
 		}
 	}
 	moveSnake();
-	draw();
+	if(snake[0] == 0 || snake[0] == width-1 || snake[1] == 0 || snake[1] == height-1) {
+		gameover = 1;
+	} else {
+		draw();
+	}
 }
 
 int main() {
@@ -118,6 +122,7 @@ int main() {
 		logic();
 	}
 	draw();
+	printf("Game Over!\n");
 	printf("Final score: %d", score);
 
 	return 0;
