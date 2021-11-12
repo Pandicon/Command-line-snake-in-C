@@ -54,9 +54,11 @@ void draw() {
 		printf("\n");
 		i = 0;
 	}
-	printf("Score: %d", score);
-	printf("\n");
-	printf("Press X to quit the game");
+	if(!gameover) {
+		printf("Score: %d", score);
+		printf("\n");
+		printf("Press X to quit the game");
+	}
 }
 
 void spawnFruit() {
@@ -115,7 +117,7 @@ int main() {
 	while(!gameover) {
 		logic();
 	}
-	system("cls");
+	draw();
 	printf("Final score: %d", score);
 
 	return 0;
