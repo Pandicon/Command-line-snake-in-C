@@ -8,7 +8,7 @@ int x, y, i = 0;
 int width = 30, height = 30, gameover = 0;
 int score = 0;
 int fruitX = 0, fruitY = 0;
-char line[30];
+char row[30];
 int snake[2] = {15, 15};
 int direction = 0; //1 = top, 2 = right, 3 = bottom, 4 = left
 
@@ -16,20 +16,20 @@ void moveSnake() {
 	int moveBy[2] = {0, 0};
 	switch (direction) {
 		case 1:
-			moveBy[0] = -1;
-			moveBy[1] = 0;
+			moveBy[0] = 0;
+			moveBy[1] = -1;
 			break;
 		case 2:
-			moveBy[0] = 0;
-			moveBy[1] = 1;
-			break;
-		case 3:
 			moveBy[0] = 1;
 			moveBy[1] = 0;
 			break;
-		case 4:
+		case 3:
 			moveBy[0] = 0;
-			moveBy[1] = -1;
+			moveBy[1] = 1;
+			break;
+		case 4:
+			moveBy[0] = -1;
+			moveBy[1] = 0;
 			break;
 	}
 	snake[0] += moveBy[0];
@@ -38,20 +38,20 @@ void moveSnake() {
 
 void draw() {
 	system("cls");
-	for(x = 0; x < width; x++) {
-		for(y = 0; y < height; y++) {
+	for(y = 0; y < height; y++) {
+		for(x = 0; x < width; x++) {
 			if(x == snake[0] && y == snake[1]) {
-				line[i] = 'O';
+				row[i] = 'O';
 			} else if(x == fruitX && y == fruitY) {
-				line[i] = '$';
+				row[i] = '$';
 			} else if(x == 0 || x == width-1 || y == 0 || y == height-1) {
-				line[i] = '#';
+				row[i] = '#';
 			} else {
-				line[i] = ' ';
+				row[i] = ' ';
 			}
 			i++;
 		}
-		printf(line);
+		printf(row);
 		printf("\n");
 		i = 0;
 	}
