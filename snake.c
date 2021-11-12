@@ -10,7 +10,7 @@ int score = 0;
 int fruitX = 0, fruitY = 0;
 char line[30];
 int snake[2] = {15, 15};
-int direction = 1; //1 = top, 2 = right, 3 = bottom, 4 = left
+int direction = 0; //1 = top, 2 = right, 3 = bottom, 4 = left
 
 void moveSnake() {
 	int moveBy[2] = {0, 0};
