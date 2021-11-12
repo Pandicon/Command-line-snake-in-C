@@ -92,18 +92,23 @@ void input() {
     if (kbhit()) {
         switch (getch()) {
 			case 'w':
+			case 'W':
 				direction = 1;
 				break;
 			case 'a':
+			case 'A':
 				direction = 4;
 				break;
 			case 's':
+			case 'S':
 				direction = 3;
 				break;
 			case 'd':
+			case 'D':
 				direction = 2;
 				break;
 			case 'x':
+			case 'X':
 				gameover = 1;
 				break;
         }
