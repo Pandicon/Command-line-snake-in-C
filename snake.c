@@ -1,6 +1,7 @@
+#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <conio.h>
+#include <time.h>
 #include <windows.h>
 
 int x, y, i = 0;
@@ -117,6 +118,7 @@ void logic() {
 }
 
 int main() {
+	srand (time(NULL));
 	startGame();
 	while(!gameover) {
 		logic();
