@@ -6,5 +6,4 @@ To run it, navigate the console to the folder where the `snake.exe` file is loca
 
 ## Controls
 To change the direction of the snake, you have to use wasd (w to go up, a to go left, s to go down, and d to go right).<br>
-To exit the game, you can just press x (or ctrl+C).<br>
-**Don't use Shift/Caps lock, it won't work with capital letters**
+To exit the game, you can just press x (or ctrl+C).
