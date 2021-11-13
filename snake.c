@@ -111,28 +111,32 @@ void startGame() {
 
 void input() {
     if (kbhit()) {
+		int newDirection = direction;
         switch (getch()) {
 			case 'w':
 			case 'W':
-				direction = 1;
+				newDirection = 1;
 				break;
 			case 'a':
 			case 'A':
-				direction = -2;
+				newDirection = -2;
 				break;
 			case 's':
 			case 'S':
-				direction = -1;
+				newDirection = -1;
 				break;
 			case 'd':
 			case 'D':
-				direction = 2;
+				newDirection = 2;
 				break;
 			case 'x':
 			case 'X':
 				gameover = 1;
 				break;
         }
+		if(newDirection != -direction || snakeLength == 1) {
+			direction = newDirection;
+		}
     }
 }
 
