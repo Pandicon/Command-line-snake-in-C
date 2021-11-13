@@ -4,17 +4,26 @@
 #include <time.h>
 #include <windows.h>
 
-int x, y, i = 0;
+int x, y;
 int width = 30, height = 30, gameover = 0;
-int score = 0;
+int score = 0, snakeLength = 1;
 int fruitX = 0, fruitY = 0;
 char row[30];
-int snake[2] = {15, 15};
-int direction = 0; //1 = top, 2 = right, 3 = bottom, 4 = left
+int snake[900][2] = {{15, 15}};
+int direction = 0; //1 = top, 2 = right, -1 = bottom, -2 = left
 
-void moveSnake() {
+int isSnakeBody(int coordinates[2], int snakeBody[900][2], int snakeLength) {
+	for(int i = 0; i < snakeLength; i++) {
+        if(snakeBody[i][0] == coordinates[0] && snakeBody[i][1] == coordinates[1]) {
+            return 1;
+		}
+    }
+    return 0;
+}
+
+void moveSnakeCell(int snake[900][2], int cellPos, int dir) {
 	int moveBy[2] = {0, 0};
-	switch (direction) {
+	switch (dir) {
 		case 1:
 			moveBy[0] = 0;
 			moveBy[1] = -1;
@@ -23,24 +32,34 @@ void moveSnake() {
 			moveBy[0] = 1;
 			moveBy[1] = 0;
 			break;
-		case 3:
+		case -1:
 			moveBy[0] = 0;
 			moveBy[1] = 1;
 			break;
-		case 4:
+		case -2:
 			moveBy[0] = -1;
 			moveBy[1] = 0;
 			break;
 	}
-	snake[0] += moveBy[0];
-	snake[1] += moveBy[1];
+	snake[cellPos][0] += moveBy[0];
+	snake[cellPos][1] += moveBy[1];
+}
+
+void moveSnake() {
+	for(int i = snakeLength; i >= 1; i--) {
+		snake[i][0] = snake[i-1][0];
+		snake[i][1] = snake[i-1][1];
+	}
+	moveSnakeCell(snake, 0, direction);
 }
 
 void draw() {
 	system("cls");
 	for(y = 0; y < height; y++) {
+		int i = 0;
 		for(x = 0; x < width; x++) {
-			if(x == snake[0] && y == snake[1]) {
+			int coord[2] = {x, y};
+			if(isSnakeBody(coord, snake, snakeLength)) {
 				row[i] = 'O';
 			} else if(x == fruitX && y == fruitY) {
 				row[i] = '$';
@@ -53,7 +72,6 @@ void draw() {
 		}
 		printf(row);
 		printf("\n");
-		i = 0;
 	}
 	if(!gameover) {
 		printf("Score: %d\n", score);
@@ -73,11 +91,11 @@ void spawnFruit() {
 
 void spawnSnake() {
 	do {
-		snake[0] = rand()%width;
-	} while(snake[0] == 0 || snake[0] == width-1);
+		snake[0][0] = rand()%width;
+	} while(snake[0][0] == 0 || snake[0][0] == width-1);
 	do {
-		snake[1] = rand()%height;
-	} while(snake[1] == 0 || snake[1] == height-1);
+		snake[0][1] = rand()%height;
+	} while(snake[0][1] == 0 || snake[0][1] == height-1);
 }
 
 void startGame() {
@@ -97,11 +115,11 @@ void input() {
 				break;
 			case 'a':
 			case 'A':
-				direction = 4;
+				direction = -2;
 				break;
 			case 's':
 			case 'S':
-				direction = 3;
+				direction = -1;
 				break;
 			case 'd':
 			case 'D':
@@ -118,14 +136,18 @@ void input() {
 void logic() {
 	Sleep(250);
 	input();
-	if(snake[0] == fruitX && snake[1] == fruitY) {
+	if(snake[0][0] == fruitX && snake[0][1] == fruitY) {
+		snake[snakeLength][0] = snake[snakeLength-1][0];
+		snake[snakeLength][1] = snake[snakeLength-1][1];
+		moveSnakeCell(snake, snakeLength, -direction);
 		score += 1;
-		while(snake[0] == fruitX && snake[1] == fruitY) {
+		snakeLength += 1;
+		while(snake[0][0] == fruitX && snake[0][1] == fruitY) {
 			spawnFruit();
 		}
 	}
 	moveSnake();
-	if(snake[0] == 0 || snake[0] == width-1 || snake[1] == 0 || snake[1] == height-1) {
+	if(snake[0][0] == 0 || snake[0][0] == width-1 || snake[0][1] == 0 || snake[0][1] == height-1) {
 		gameover = 1;
 	} else {
 		draw();
