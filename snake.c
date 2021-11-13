@@ -12,8 +12,8 @@ char row[30];
 int snake[900][2] = {{15, 15}};
 int direction = 0; //1 = top, 2 = right, -1 = bottom, -2 = left
 
-int isSnakeBody(int coordinates[2], int snakeBody[900][2], int snakeLength) {
-	for(int i = 0; i < snakeLength; i++) {
+int isSnakeBody(int coordinates[2], int snakeBody[900][2], int snakeLength, int startIndex) {
+	for(int i = startIndex; i < snakeLength; i++) {
         if(snakeBody[i][0] == coordinates[0] && snakeBody[i][1] == coordinates[1]) {
             return 1;
 		}
@@ -51,6 +51,9 @@ void moveSnake() {
 		snake[i][1] = snake[i-1][1];
 	}
 	moveSnakeCell(snake, 0, direction);
+	if(isSnakeBody(snake[0], snake, snakeLength, 1)) {
+		gameover = 1;
+	}
 }
 
 void draw() {
@@ -59,7 +62,7 @@ void draw() {
 		int i = 0;
 		for(x = 0; x < width; x++) {
 			int coord[2] = {x, y};
-			if(isSnakeBody(coord, snake, snakeLength)) {
+			if(isSnakeBody(coord, snake, snakeLength, 0)) {
 				row[i] = 'O';
 			} else if(x == fruitX && y == fruitY) {
 				row[i] = '$';
