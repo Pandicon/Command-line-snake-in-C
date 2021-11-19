@@ -8,7 +8,7 @@ int x, y;
 int width = 30, height = 30, gameover = 0;
 int score = 0, snakeLength = 1;
 int fruitX = 0, fruitY = 0;
-char row[30];
+char row[31];
 int snake[900][2] = {{15, 15}};
 int direction = 0; //1 = top, 2 = right, -1 = bottom, -2 = left
 
@@ -58,6 +58,7 @@ void moveSnake() {
 
 void draw() {
 	system("cls");
+	row[30] = '\0';
 	for(y = 0; y < height; y++) {
 		int i = 0;
 		for(x = 0; x < width; x++) {
@@ -73,8 +74,7 @@ void draw() {
 			}
 			i++;
 		}
-		printf(row);
-		printf("\n");
+		printf("%s\n", row);
 	}
 	if(!gameover) {
 		printf("Score: %d\n", score);
